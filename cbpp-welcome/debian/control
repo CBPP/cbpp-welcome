@@ -1,0 +1,104 @@
+Source: cbpp-welcome
+Section: misc
+Priority: extra
+Maintainer: Ben Young <computermouth@crunchbangplusplus.org>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.5
+Homepage: https://crunchbangplusplus.org
+
+Package: cbpp-welcome
+Architecture: all
+Depends: 
+ ${shlibs:Depends}, 
+ ${misc:Depends}, 
+ terminator, 
+ cb-pipemenus
+Description: CrunchBangplusplus welcome script.
+ Optional post installation script for CBPP.
+
+Package: cbpp-meta-printer-support
+Architecture: all
+Depends: 
+ ${misc:Depends},
+ cups, 
+ cups-pdf,
+ system-config-printer,
+ printer-driver-hpijs
+Description: CrunchBangplusplus printer support meta package
+ Installs various printer packages to enable printer support.
+
+Package: cbpp-meta-java
+Architecture: all
+Depends: ${misc:Depends}, openjdk-6-jre, icedtea6-plugin
+Description: CrunchBangplusplus java meta package
+ Installs various java packages.
+
+Package: cbpp-meta-libreoffice
+Architecture: all
+Depends: ${misc:Depends}, libreoffice, libreoffice-gtk
+Description: CrunchBangplusplus libreoffice meta package
+ Installs libreoffice and associated gtk theme.
+
+Package: cbpp-meta-vcs
+Architecture: all
+Depends:
+ ${misc:Depends},
+ git,
+ git-gui,
+ git-cvs,
+ git-svn,
+ git-email,
+ mercurial,
+ subversion,
+ subversion-tools,
+ bzr,
+ bzrtools,
+ cvs
+Description: CrunchBang version control meta package
+ Installs various version control tools.
+
+Package: cbpp-meta-ssh
+Architecture: all
+Depends: ${misc:Depends}, openssh-server, openssh-client
+Description: CrunchBangplusplus ssh meta package
+ Installs ssh server and various ssh tools.
+
+Package: cbpp-meta-lamp
+Architecture: all
+Depends:
+ ${misc:Depends},
+ apache2,
+ mysql-server,
+ php5,
+ php-pear,
+ php5-gd,
+ php5-mysql,
+ php5-imagick,
+ php5-curl,
+ curl,
+ phpmyadmin,
+ rsync,
+ cronolog
+Description: CrunchBangplusplus lamp meta package
+ Installs various web server tools.
+
+Package: cbpp-meta-packaging
+Architecture: all
+Depends:
+ ${misc:Depends},
+ build-essential,
+ debhelper,
+ cdbs,
+ dh-make,
+ diffutils,
+ patch,
+ gnupg,
+ fakeroot,
+ lintian,
+ devscripts,
+ pbuilder,
+ dpatch,
+ dput,
+ quilt
+Description: CrunchBangplusplus packaging meta package
+ Installs various Debian packaging tools.
