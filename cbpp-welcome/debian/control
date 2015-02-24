@@ -12,7 +12,7 @@ Depends:
  ${shlibs:Depends}, 
  ${misc:Depends}, 
  terminator, 
- cb-pipemenus
+ cbpp-pipemenus
 Description: CrunchBangplusplus welcome script.
  Optional post installation script for CBPP.
 
