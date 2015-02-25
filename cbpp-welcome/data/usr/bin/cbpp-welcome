@@ -49,12 +49,12 @@ fi
 LIBDIR="/usr/lib/lib-cbpp-welcome"
 STEP="0"
 STEPS=`ls -1 $LIBDIR | wc -l`
-# Importing variables and functions from cb-include.cfg
-if [[ -f /usr/bin/cb-include.cfg ]]
+# Importing variables and functions from cbpp-include.cfg
+if [[ -f /usr/bin/cbpp-include.cfg ]]
 then
-    source "/usr/bin/cb-include.cfg"
+    source "/usr/bin/cbpp-include.cfg"
 else
-    echo "Error: Failed to locate cb-include.cfg"
+    echo "Error: Failed to locate cbpp-include.cfg"
     exit 1
 fi
 
