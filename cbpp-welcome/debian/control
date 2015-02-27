@@ -29,7 +29,7 @@ Description: CrunchBangplusplus printer support meta package
 
 Package: cbpp-meta-java
 Architecture: all
-Depends: ${misc:Depends}, openjdk-6-jre, icedtea6-plugin
+Depends: ${misc:Depends}, openjdk-7-jre, icedtea7-plugin
 Description: CrunchBangplusplus java meta package
  Installs various java packages.
 
