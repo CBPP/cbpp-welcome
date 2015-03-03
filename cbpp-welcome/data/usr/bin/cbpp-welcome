@@ -1,111 +1,104 @@
 #!/bin/bash
 # Post installation script
-# ------------------------
-# First run
-if [ "$1" = "--firstrun" ]; then
-    if [ -d /live/overlay ]; then
-        exit 0    
+TEXTDOMAIN=cbpp-welcome
+
+
+CB_WELCOME_LIBDIR='/usr/lib/lib-cbpp-welcome'
+STEPS_BASIC=('apt-update' 'apt-dist-upgrade' 'install-printer-packages' 'install-java-packages' 'install-libreoffice' 'devel')
+STEPS_DEVEL=('devel-install-version-control-tools' 'devel-install-ssh-server' 'devel-install-lamp-stack' 'devel-install-packaging-tools')
+
+createFlag() {
+    mkdir -p "$HOME/.config/crunchbangplusplus"
+    touch "$HOME/.config/crunchbangplusplus/cbpp-welcome"
+}
+
+runInTerminal() {
+    x-terminal-emulator -e 'cbpp-welcome'
+    exit 0
+}
+
+# prints something like -------[ step 1 of 10 ]-------
+header() {
+    local headerLength=$((76 - 4)) # 4 is for '[  ]' # but why 76???
+    local headerText=$(printf $"screen %d of %d" "$STEP" "$STEPS")
+    dashesStart=$( printf "%$(( (headerLength - ${#headerText}) / 2 ))s" )
+    dashesEnd=$( printf "%$(( (headerLength - ${#headerText}) / 2 + (headerLength - ${#headerText}) % 2 ))s" )
+    echo "  ${dashesStart// /-}[ ${headerText} ]${dashesEnd// /-}"
+}
+
+# Usage: setupPage title text prompt
+setupPage() {
+    clear
+    header
+    say
+    say "$1" # title
+    titleDelimiter=$( printf "%${#1}s" )
+    say "${titleDelimiter// /-}"
+    say "$2" # description
+    say
+    prompt "  $3"
+    return $?
+}
+
+# Common function for most install scripts. USE THIS unless you really can't.
+# Usage: installPage title text package...
+# example: installPage 'LibreOffice suite' 'This will install libreoffice' 'libreoffice'
+installPage() {
+    local title=$"INSTALL"" ${1^^}"
+    local text="$2 "$"If you choose to do this, the following packages will be installed:""
+
+    ${@:3}
+
+"$"Note: additional packages listed as dependencies will also be installed."
+
+    local prompt=$"Would you like to install"" $1?"
+
+    if setupPage "$title" "$text" "$prompt"; then
+        sudo apt-get install -y "${@:3}"
+        return 0
     fi
-    if [ -e "/home/$USER/.config/crunchbang/cbpp-welcome" ]; then
-        exit 0
-    else
-        if ! echo `groups` | grep "sudo" >/dev/null; then
-            # Create flag
-            if [ ! -d "/home/$USER/.config/crunchbangplusplus" ]; then
-                mkdir /home/$USER/.config/crunchbangplusplus
-            fi
-            if [ ! -f "/home/$USER/.config/crunchbangplusplus/cbpp-welcome" ]; then
-                 touch /home/$USER/.config/crunchbangplusplus/cbpp-welcome
-            fi
-            exit 0
-        fi
-	if [ -x "/usr/bin/terminator" ];then
-            terminator --title="#!++ Post-installation Script" --command="cbpp-welcome"
-            exit 0
-        fi
-    fi
-fi
-# Open in terminator
-if [ "$1" = "--open" ]; then
-    if [ -x "/usr/bin/terminator" ];then
-        terminator --title="#!++ Post-installation Script" --command="cbpp-welcome"
-        exit 0
-    fi
-fi
-# Create flag
-if [ ! -d "/home/$USER/.config/crunchbangplusplus" ]; then
-    mkdir /home/$USER/.config/crunchbangplusplus
-fi
-if [ ! -f "/home/$USER/.config/crunchbangplusplus/cbpp-welcome" ]; then
-    touch /home/$USER/.config/crunchbangplusplus/cbpp-welcome
+    return 1
+}
+
+if [[ $1 = '--firstrun' ]]; then # First run
+    [[ -d /live/overlay || -e $HOME/.config/crunchbangplusplus/cbpp-welcome || ! $(groups) =~ ( |^)sudo( |$) ]] && exit 1
+    runInTerminal
+elif [[ $1 = '--open' ]]; then # Open in terminal
+    runInTerminal
 fi
 
-if ! echo `groups` | grep "sudo" >/dev/null; then
-  echo "Error: must be a member of the sudo group to run this script."
-  exit 0
-fi
+createFlag
 
-# Vars
-LIBDIR="/usr/lib/lib-cbpp-welcome"
-STEP="0"
-STEPS=`ls -1 $LIBDIR | wc -l`
-# Importing variables and functions from cbpp-include.cfg
-if [[ -f /usr/bin/cbpp-include.cfg ]]
-then
-    source "/usr/bin/cbpp-include.cfg"
-else
-    echo "Error: Failed to locate cbpp-include.cfg"
+if [[ ! $(groups) =~ ( |^)sudo( |$) ]]; then
+    echo $"Error: Must be a member of the sudo group to run this script" >&2 # TODO 'root' user is not a member of the sudo group. Is it meant to restrict root from executing this script?
     exit 1
 fi
 
-# Import prompt
-if [[ -f "${LIBDIR}/prompt" ]]; then
-	source "${LIBDIR}/prompt"
-else
-	echo "Error: Failed to locate prompt"
-	exit 1
+if ! . cbpp-include.cfg 2> /dev/null; then
+    echo $"Error: Failed to locate cbpp-include.cfg in PATH" >&2
+    exit 1
 fi
 
 # Run through steps
-STEP=$((STEP+1))
-. $LIBDIR/intro
+STEP=1
+(( STEPS = ${#STEPS_BASIC[@]} + ${#STEPS_DEVEL[@]} + 2 )) # 2 is intro and fini
 
-connectiontest
+. "$CB_WELCOME_LIBDIR/intro"
+clear
+connectiontest # TODO pipe this into say
 
-STEP=$((STEP+1))
-. $LIBDIR/apt-update
+for curStep in "${STEPS_BASIC[@]}"; do
+    ((STEP++))
+    . "$CB_WELCOME_LIBDIR/$curStep"
+done
 
-STEP=$((STEP+1))
-. $LIBDIR/apt-dist-upgrade
-
-STEP=$((STEP+1))
-. $LIBDIR/install-printer-packages
-
-STEP=$((STEP+1))
-. $LIBDIR/install-java-packages
-
-STEP=$((STEP+1))
-. $LIBDIR/install-libreoffice
-
-STEP=$((STEP+1))
-. $LIBDIR/devel
-
-if [ "$DEVEL" != true ]; then
-    . $LIBDIR/fini
-    exit 0
+if [[ $DEVEL ]]; then
+    for curStep in "${STEPS_DEVEL[@]}"; do
+        ((STEP++))
+        . "$CB_WELCOME_LIBDIR/$curStep"
+    done
 fi
+STEP=$STEPS
+. "$CB_WELCOME_LIBDIR/fini"
 
-STEP=$((STEP+1))
-. $LIBDIR/devel-install-version-control-tools
-
-STEP=$((STEP+1))
-. $LIBDIR/devel-install-ssh-server
-
-STEP=$((STEP+1))
-. $LIBDIR/devel-install-lamp-stack
-
-STEP=$((STEP+1))
-. $LIBDIR/devel-install-packaging-tools
-
-. $LIBDIR/fini
 exit 0
