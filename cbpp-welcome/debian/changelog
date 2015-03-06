@@ -1,6 +1,10 @@
 cbpp-welcome (1.0) unstable; urgency=low
 
   * Repackaged from cb-welcome.
+  * Merged AlexDaniel's newer version for better code refactoring and locale support.
+  * Moved original repository references to CBPP packages server.
+  * Changed metapackage installations to new cbpp- metapackages.
+  * Changed jdk6 packages to jdk7.
 
  -- Ben Young <computermouth@crunchbangplusplus.org>  Fri, 20 Feb 2015 16:46:12 -0600
 
