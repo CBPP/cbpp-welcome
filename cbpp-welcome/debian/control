@@ -29,7 +29,7 @@ Description: CrunchBangplusplus printer support meta package
 
 Package: cbpp-meta-java
 Architecture: all
-Depends: ${misc:Depends}, openjdk-7-jre, icedtea-7-plugin
+Depends: ${misc:Depends}, openjdk-8-jre, icedtea-8-plugin
 Description: CrunchBangplusplus java meta package
  Installs various java packages.
 
@@ -69,12 +69,12 @@ Depends:
  ${misc:Depends},
  apache2,
  mysql-server,
- php5,
+ php,
  php-pear,
- php5-gd,
- php5-mysql,
- php5-imagick,
- php5-curl,
+ php-gd,
+ php-mysql,
+ php-imagick,
+ php-curl,
  curl,
  phpmyadmin,
  rsync,
