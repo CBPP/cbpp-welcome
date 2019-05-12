@@ -1,3 +1,11 @@
+cbpp-welcome (10.0) unstable; urgency=low
+
+  * phpmyadmin isn't in stable buster at build time
+  * updated libreoffice dep name
+  * mysql-server has been replaced by a mariadb transitional package
+
+ -- Ben Young <computermouth@crunchbangplusplus.org>  Sun, 12 May 2019 13:57:12 -0800
+
 cbpp-welcome (9.0) unstable; urgency=low
 
   * Needed more 9's

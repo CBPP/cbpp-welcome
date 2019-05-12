@@ -4,7 +4,7 @@ DEBIAN_DEVENV_PBUILDER=$"Create pbuilder environment now?"
 
 if installPage "$DEBIAN_DEVENV_TITLE" "$DEBIAN_DEVENV_TEXT" 'cbpp-meta-packaging'; then
     echo 'MIRRORSITE=http://ftp.de.debian.org/debian' | sudo tee '/etc/pbuilderrc'
-    echo 'DISTRIBUTION=stretch' | sudo tee -a '/etc/pbuilderrc'
+    echo 'DISTRIBUTION=buster' | sudo tee -a '/etc/pbuilderrc'
     echo 'COMPONENTS="main contrib non-free"' >> sudo tee -a '/etc/pbuilderrc'
 
     prompt "  $DEBIAN_DEVENV_PBUILDER" && sudo pbuilder create
