@@ -1,3 +1,10 @@
+cbpp-welcome (9.0) unstable; urgency=low
+
+  * Needed more 9's
+  * Whoops, pbuilder env was set to wheezy, surprised no one noticed
+
+ -- Ben Young <computermouth@crunchbangplusplus.org>  Mon, 27 Feb 2017 23:23:12 -0800
+
 cbpp-welcome (1.0) unstable; urgency=low
 
   * Repackaged from cb-welcome.
