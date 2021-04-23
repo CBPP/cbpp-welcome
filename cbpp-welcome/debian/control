@@ -35,7 +35,7 @@ Description: CrunchBangplusplus java meta package
 
 Package: cbpp-meta-libreoffice
 Architecture: all
-Depends: ${misc:Depends}, libreoffice, libreoffice-gtk2
+Depends: ${misc:Depends}, libreoffice, libreoffice-gtk3
 Description: CrunchBangplusplus libreoffice meta package
  Installs libreoffice and associated gtk theme.
 
