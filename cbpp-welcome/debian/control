@@ -29,7 +29,7 @@ Description: CrunchBangplusplus printer support meta package
 
 Package: cbpp-meta-java
 Architecture: all
-Depends: ${misc:Depends}, openjdk-11-jre
+Depends: ${misc:Depends}, openjdk-17-jre
 Description: CrunchBangplusplus java meta package
  Installs various java packages.
 
@@ -96,7 +96,6 @@ Depends:
  lintian,
  devscripts,
  pbuilder,
- dpatch,
  dput,
  quilt
 Description: CrunchBangplusplus packaging meta package

@@ -1,3 +1,10 @@
+cbpp-welcome (12.0) unstable; urgency=low
+
+  * Update openjdk version
+  * Remove dpatch
+
+ -- Ben Young <computermouth@crunchbangplusplus.org>  Sun, 14 May 2023 16:57:16 -0800
+
 cbpp-welcome (11.0) unstable; urgency=low
 
   * version bump
