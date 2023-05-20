@@ -2,6 +2,7 @@ cbpp-welcome (12.0) unstable; urgency=low
 
   * Update openjdk version
   * Remove dpatch
+  * Update pbuilder conf
 
  -- Ben Young <computermouth@crunchbangplusplus.org>  Sun, 14 May 2023 16:57:16 -0800
 
