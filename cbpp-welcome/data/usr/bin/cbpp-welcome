@@ -3,7 +3,7 @@
 TEXTDOMAIN=cbpp-welcome
 
 CB_WELCOME_LIBDIR='/usr/lib/lib-cbpp-welcome'
-STEPS_BASIC=('apt-update' 'apt-dist-upgrade' 'install-printer-packages' 'install-java-packages' 'install-libreoffice' 'devel')
+STEPS_BASIC=('apt-update' 'apt-dist-upgrade' 'install-bluetooth' 'install-printer-packages' 'install-java-packages' 'install-libreoffice' 'devel')
 STEPS_DEVEL=('devel-install-version-control-tools' 'devel-install-ssh-server' 'devel-install-lamp-stack' 'devel-install-packaging-tools')
 
 createFlag() {
