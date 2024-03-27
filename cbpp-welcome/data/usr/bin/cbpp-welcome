@@ -2,7 +2,6 @@
 # Post installation script
 TEXTDOMAIN=cbpp-welcome
 
-
 CB_WELCOME_LIBDIR='/usr/lib/lib-cbpp-welcome'
 STEPS_BASIC=('apt-update' 'apt-dist-upgrade' 'install-printer-packages' 'install-java-packages' 'install-libreoffice' 'devel')
 STEPS_DEVEL=('devel-install-version-control-tools' 'devel-install-ssh-server' 'devel-install-lamp-stack' 'devel-install-packaging-tools')
@@ -55,8 +54,15 @@ installPage() {
 
     if setupPage "$title" "$text" "$prompt"; then
         sudo apt-get install -y "${@:3}"
+        
+		if ["${a:3}" = "blueman"]; then
+			# Autostart the Blueman systray applet
+			printf "%s\n" "# Start blueman-applet for systray" "blueman-applet &" >> $HOME/.config/openbox/autostart
+		fi
+		
         return 0
     fi
+	
     return 1
 }
 
